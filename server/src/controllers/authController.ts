@@ -23,12 +23,18 @@ export class AuthController {
         ], async (req: Request, res: Response) => {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
+                this._logger.info('Validation failed')
+                this._logger.info(`${errors.array()}`);
+
                 return res.status(422).json({ errors: errors.array() });
             }
 
             const response = await this._authModule.login(req.body.username, req.body.password);
 
             if (response.errors) {
+                this._logger.info('Invalid credentials')
+                this._logger.info(response.errors);
+                
                 return res.status(401).json({ 'errorMessage': 'Invalid credentials', 'errors': response.errors });
             }
 

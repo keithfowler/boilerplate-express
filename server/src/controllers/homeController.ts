@@ -15,6 +15,7 @@ export class HomeController {
 
         router.get('/', async (req: Request, res: Response) => {
             this._logger.info('Hit the home controller!');
+            
             res.json({ 'Hello': 'World!' });
         });
 
